@@ -1,26 +1,50 @@
-const commands = {
-    "PLACE": (args, robot) => {
-        if (robot.isValidPosition(args[0], args[1])) {
-            robot.x = args[0];
-            robot.y = args[1];
-            robot.direction = args[2];
-        }
-    },
-    "MOVE": (_, robot) => { console.log(" move"); },
-    "LEFT": (_, robot) => { console.log(" left"); },
-    "RIGHT": (_, robot) => { console.log(" right"); },
-    "REPORT": (_, robot) => console.log(`Robot (${robot.x}, ${robot.y}, ${robot.direction}).`),
-};
-
-function robot(world) {
-    this.world = world;
-
-    this.direction = undefined;
-    this.x = undefined;
-    this.y = undefined;
+var Rotation = require('./rotation').Rotation;
 
 
-    this.execute = (command) => commands[command.cmd](command.args, this);
+class robot {
+    constructor(world) {
+        this.world = world;
+        this.rotation = new Rotation();
+        this.x = undefined;
+        this.y = undefined;
+        this.commands = {
+            "PLACE": (args, robot) => {
+                let arg0 = Number(args[0]);
+                let arg1 = Number(args[1]);
+                if (robot.world.isValidCoordinate(arg0, arg1) &&
+                    robot.rotation.isValidDirection(args[2])) {
+                    robot.x = arg0;
+                    robot.y = arg1;
+                    robot.rotation.setDirectionByName(args[2]);
+                }
+            },
+            "MOVE": (_, robot) => {
+                var dirPointer = {
+                    "NORTH": () => robot.world.isValidLatitude(robot.y + 1) ? robot.y++ : this.beep(),
+                    "EAST": () => robot.world.isValidLongitude(robot.x + 1) ? robot.x++ : this.beep(),
+                    "SOUTH": () => robot.world.isValidLatitude(robot.y - 1) ? robot.y-- : this.beep(),
+                    "WEST": () => robot.world.isValidLongitude(robot.x - 1) ? robot.x-- : this.beep()
+                };
+                if (robot.rotation.direction != undefined) {
+                    dirPointer[robot.rotation]();
+                }
+                else {
+                    console.error("Position of robot not set.");
+                }
+            },
+            "LEFT": (_, robot) => robot.rotation.turnLeft(),
+            "RIGHT": (_, robot) => robot.rotation.turnRight(),
+            "REPORT": (_, robot) => console.log(robot.toString())
+        };
 
-    this.isValidPosition = (x, y) => x >= 0 && x <= 5 && y >= 0 && y <= 5;
+    }
+    toString() { return `${this.x}, ${this.y}, ${this.rotation}` };
+
+    beep() { console.error("Autoprotected robot"); }
+
+    execute(command) {
+        this.commands[command.cmd](command.args, this);
+    }
 }
+
+module.exports.Robot = robot;

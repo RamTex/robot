@@ -1,17 +1,14 @@
 var readline = require('readline');
 
-var rl = readline.createInterface({
+var Robot = require('./robot').Robot;
+var World = require('./world').World;
+
+readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     terminal: false
-});
+}).on('line', main);
 
-let robot = new robot(new world(5, 5));
-
-rl.on('line', function (line) {
-    let command = parseCommand(line);
-    robot.execute(command);
-})
 
 function parseCommand(line) {
     var commandAndParameters = line.split(' ');
@@ -21,3 +18,26 @@ function parseCommand(line) {
     };
     return command;
 }
+
+// This flag allows to report the current status after each step.
+const isAutoReport = process.argv[2] === "-a" || process.argv[2] === "--autoreport";
+
+const world = new World(5, 5);
+if (isAutoReport)
+    console.log(world.toString());
+const robot = new Robot(world);
+
+
+/// TAG: Main loop, processing each command from stdin
+function main(rawCommand) {
+    const command = parseCommand(rawCommand);
+    try {
+        robot.execute(command);
+        if (isAutoReport)
+            console.log(robot.toString());
+    }
+    catch (err) {
+        console.error("Error executing command.");
+    }
+}
+
