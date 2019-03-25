@@ -36,7 +36,7 @@ function Main(rawCommand) {
 
         robot.execute(command);
 
-        if (isAutoReport)
+        if (isAutoReport && !(robot.toString() === undefined))
             console.log(robot.toString());
     }
     catch (err) {

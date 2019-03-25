@@ -29,6 +29,7 @@
 ### Improvements
  - In case of further requirements I would: Avoid direct writing to stdout from other classes than the main loop. Inject output streams to classes. This allows a cleaner dataflow and does not clutter unit test output. At the current stage it would be overengineered.
  - Improve detail level of errors related to input parsing errors. 
+ - Check with stakeholders how talkative they want the robot: What level of warnings is required. Now the robot just refuses, does not say why.
  - Get the graphical output approved by project manager or remove from project.
 
 ## Bonus
@@ -46,7 +47,7 @@ There are two ways to start the application.
 
     ```
     cd robot
-    node index
+    node robot
     ````
 
 2) Automatic
@@ -55,12 +56,12 @@ There are two ways to start the application.
 
     ```
     cd robot
-    node index < example_c.txt
+    node robot < example_c.txt
     ```
 
 **Bonus**: In both cases you can pipe the stdout to `gui` for a character based representation of the robot in the field.
 This works in interactive and automatic mode. Specify the `-a` or `--automatic` flag to advise the main loop to report every action to allow consistent representation.
 
-    node index -a < example_c.txt | node gui
+    node robot -a < example_c.txt | node gui
 
 

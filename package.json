@@ -2,10 +2,10 @@
   "name": "robot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "robot.js",
   "scripts": {
     "test": "mocha",
-    "start": "node index.js"
+    "start": "node robot.js"
   },
   "author": "",
   "license": "ISC",

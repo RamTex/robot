@@ -16,9 +16,6 @@ class Robot {
                     this.y = arg1;
                     this.rotation.setDirectionByName(args[2]);
                 }
-                else {
-                    console.warn("Illegal location or direction");
-                }
             },
             "MOVE": _ => {
                 var dirPointer = {
@@ -30,21 +27,11 @@ class Robot {
                 if (this.rotation.direction != undefined) {
                     dirPointer[this.rotation]();
                 }
-                else {
-                    // Discarding until valid PLACE command
-                }
             },
             "LEFT": _ => this.rotation.turnLeft(),
             "RIGHT": _ => this.rotation.turnRight(),
-            "REPORT": _ => {
-                const report = this.toString()
-                if (report === undefined)
-                    console.warn("Robot not initalized");
-                else
-                    console.log(report);
-            }
+            "REPORT": _ => (this.toString() === undefined) ? {} : console.log(this.toString())
         };
-
     }
 
     toString() {
