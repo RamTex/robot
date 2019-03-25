@@ -41,9 +41,10 @@ In order to provide a fluent experience there is a command line option to genera
 
 ## Starting
 There are two ways to start the application.
+The program is very strict and cares about uppercase and lowercase.
 1) Interactive
    
-   Parsing the user input. The program is very strict and cares about uppercase and lowercase. 
+   Parsing the user input from keyboard as stdin.  
 
     ```
     cd robot
