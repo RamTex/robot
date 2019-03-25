@@ -1,10 +1,16 @@
-var Rotation = require('../app/rotation').Rotation;//TODO use {} 
+var Rotation = require('../app/rotation').Rotation;
 var DIRECTIONS = require('../app/rotation').DIRECTIONS;
 var assert = require('assert');
 
 describe('Rotation', function () {
     it('has no initial direction', function () {
         var sut = new Rotation();
+        assert.equal(sut.direction, undefined);
+    });
+
+    it('does not turn without initial direction', function () {
+        var sut = new Rotation();
+        sut.turnLeft();
         assert.equal(sut.direction, undefined);
     });
 

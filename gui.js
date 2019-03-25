@@ -1,5 +1,5 @@
 var readline = require('readline');
-var DIRECTIONS = require('./rotation').DIRECTIONS;
+var DIRECTIONS = require('./app/rotation').DIRECTIONS;
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -7,6 +7,7 @@ var rl = readline.createInterface({
     terminal: false
 });
 
+// Dimensions of the world as reported
 let width = undefined;
 let height = undefined;
 
@@ -21,7 +22,7 @@ rl.on('line', function (line) {
     // Thanks for having a look at the character based command line output. 
     // If the --autoreport option in the main application is specified, 
     // each step will be reported to allow for a consistent output.
-    // Also the size of the world will bew reported.
+    // Also initially the size of the world will be reported to initialize renderer with.
     // Examples for received inputs:
     //  
     //     5,5,WORLD

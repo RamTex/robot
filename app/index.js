@@ -7,7 +7,7 @@ readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     terminal: false
-}).on('line', main);
+}).on('line', Main);
 
 
 function parseCommand(line) {
@@ -27,17 +27,20 @@ if (isAutoReport)
     console.log(world.toString());
 const robot = new Robot(world);
 
+/// Process each command from stdin7
 
-/// TAG: Main loop, processing each command from stdin
-function main(rawCommand) {
-    const command = parseCommand(rawCommand);
+/// TAG: Main loop
+function Main(rawCommand) {
     try {
+        const command = parseCommand(rawCommand);
+
         robot.execute(command);
+
         if (isAutoReport)
             console.log(robot.toString());
     }
     catch (err) {
-        console.error("Error executing command.");
+        console.error(`Error executing command. ${rawCommand}`);
     }
 }
 
