@@ -9,7 +9,5 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "sinon": "^7.3.0"
-  }
+  "devDependencies": {}
 }
